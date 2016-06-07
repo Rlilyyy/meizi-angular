@@ -1,3 +1,33 @@
+@baseFontColor: rgb(82, 82, 82);
 .container {
-    
+    padding: 10px 5px;
+
+    .item-left, .item-right {
+        float: left;
+        width: 50%;
+        padding: 0 5px;
+    }
+
+    .item-left, .item-right {
+
+        .item {
+            margin-bottom: 15px;
+            box-shadow: 0 0 8px rgb(148, 148, 148);
+
+            .item-img {
+                height: 220px;
+                background-image: url("http://ac-olwhhm4o.clouddn.com/4063qegYjlC8nx6uEqxV0kT3hn6hdqJqVWPKpdrS");
+                background-position: top;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            .item-time {
+                font-size: 1.6rem;
+                padding: 5px 0;
+                color: @baseFontColor;
+                text-align: center;
+            }
+        }
+    }
 }
