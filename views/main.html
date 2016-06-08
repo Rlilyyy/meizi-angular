@@ -1,0 +1,12 @@
+<div id="item-left" class="item-left">
+  <div class="item" ng-repeat="result in data" ng-if="$even"><a href="#/data/{[{ result.publishedAt }]}">
+      <div class="item-img" style="background-image: url('{[{ result.url }]}')"></div></a>
+    <div class="item-time">{[{ result.publishedAt }]}</div>
+  </div>
+</div>
+<div id="item-right" class="item-right">
+    <div class="item" ng-repeat="result in data" ng-if="$odd"><a href="#/data/{[{ result.publishedAt }]}">
+        <div class="item-img" style="background-image: url('{[{ result.url }]}')"></div></a>
+      <div class="item-time">{[{ result.publishedAt }]}</div>
+    </div>
+</div>

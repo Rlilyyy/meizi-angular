@@ -1,6 +1,86 @@
 require("../component/stylesheets/common.less");
 require("../component/stylesheets/header.less");
-require("../stylesheet/index.less");
 require("font-awesome/css/font-awesome.min.css");
+require("../stylesheet/index.less");
+
+let $ajax = require("../component/javascripts/ajax.js");
+
+let URL = {
+    // HISTORY_URL: "http://localhost:5000/getDate",
+    HISTORY_URL: "./getDate",
+    // DATA_URL: "http://localhost:5000/getData"
+    DATA_URL: "./getData/",
+    FULI_URL: "./getFuli/10/"
+}
 
 let angular = require("angular");
+let ngRoute = require("angular-route");
+
+let app = angular.module('ameizi', [ngRoute]);
+
+app.service("pageService", function() {
+    this.page = 1;
+    this.data = [];
+});
+
+app.config(($interpolateProvider) => {
+    $interpolateProvider.startSymbol('{[{');
+    $interpolateProvider.endSymbol('}]}');
+});
+
+
+
+app.controller("welfaresController", function($scope, $http, pageService) {
+    let container = document.getElementById("container");
+    let clientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    let isBottom = function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        return (document.body.scrollHeight - clientHeight - 100) <= scrollTop;
+    }
+    $scope.loaded = false;
+    $scope.data = [];
+
+    $scope.refresh = function(results) {
+        Array.prototype.push.apply($scope.data, results.map(obj => {
+            obj["publishedAt"] = obj["publishedAt"].split("T")[0];
+            return obj;
+        }));
+        $scope.loaded = true;
+    }
+
+    $scope.getData = function() {
+        $scope.loaded = false;
+        $http.get(URL.FULI_URL + (pageService.page++)).success(response => {
+            Array.prototype.push.apply(pageService.data, response.results);
+            $scope.refresh(response.results);
+        });
+    };
+
+    window.addEventListener("scroll", function() {
+        if(!isBottom()) return null;
+        if($scope.loaded) {
+            $scope.getData();
+        }
+    }, false);
+
+    if(!!pageService.data.length > 0) {
+        $scope.refresh(pageService.data);
+    }else {
+        $scope.getData();
+    }
+
+}).controller("testController", function($scope, $http,  $routeParams, pageService) {
+    let date = $routeParams.date.split("-").join("/");
+    $http.get(URL.DATA_URL + date).success(response => {
+        let results = response.results;
+        $scope.data = results;
+    })
+}).config(function($routeProvider) {
+    $routeProvider.when("/", {
+        templateUrl: "main",
+        controller: "welfaresController"
+    }).when("/data/:date", {
+        templateUrl: "test",
+        controller: "testController"
+    })
+});

@@ -17,7 +17,7 @@ module.exports = {
 
     output: {
         path: path.join(__dirname, 'public'), //输出目录的配置，模板、样式、脚本、图片等资源的路径配置都相对于它
-        publicPath: '/public/',   // 服务器路径
+        publicPath: '/',   // 服务器路径
         filename: 'javascripts/[name].js',            //每个页面对应的主js的生成配置
         chunkFilename: 'javascripts/[id].chunk.js'   //chunk生成的配置
     },
@@ -97,7 +97,7 @@ var configNames = templateFiles.configNames;
 configNames.forEach(function(configName) {
     var config = {};
     //生成的html存放路径，相对于path
-    config.filename = "../views/" + configName.baseName + ".html";
+    config.filename = "../buildViews/" + configName.baseName + ".html";
     //html模板路径
     config.template = "./src/templates/" + configName.baseName + ".jade";
     //js插入的位置，true/'head'/'body'/false
