@@ -20,3 +20,87 @@
         background-size: cover;
     }
 }
+
+.loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+
+    .animate {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        top: 50%;
+        left: 50%;
+        margin-top: -150px;
+        margin-left: -75px;
+        border-radius: 15px;
+        background-color: rgba(42,42,42,0.8);
+        text-align: center;
+
+        .circle {
+            display: inline-block;
+            // position: absolute;
+            border-radius: 50%;
+            border: 5px solid white;
+        }
+
+
+        @-webkit-keyframes circleAnimate {
+            0%, 100% {
+                -webkit-transform: rotate(0);
+            }
+            50% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+        @keyframes circleAnimate {
+            0, 100% {
+                transform: rotate(0);
+            }
+            50% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .circle-small {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin-top: 13px;
+            animation: circleAnimate 2s infinite;
+            -webkit-animation: circleAnimate 2s infinite;
+
+
+            &:before, &:after {
+                display: block;
+                content: "";
+                position: absolute;
+                width: 15px;
+                height: 15px;
+                background-color: white;
+                border-radius: 50%;
+                top: 50%;
+                margin-top: -7.5px;
+            }
+            &:before {
+                left: -10px;
+            }
+            &:after {
+                right: -10px;
+            }
+        }
+
+        .loading-text {
+            position: absolute;
+            display: block;
+            width: 100%;
+            padding: 5px 0;
+            bottom: 10px;
+            text-align: center;
+            color: white;
+            font-size: 1.7rem;
+        }
+    }
+}

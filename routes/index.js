@@ -17,8 +17,8 @@ router.get("/main", function(req, res, next) {
     res.render("main");
 });
 
-router.get("/test", function(req, res, next) {
-    res.render("test");
+router.get("/data", function(req, res, next) {
+    res.render("data");
 });
 /**
 *

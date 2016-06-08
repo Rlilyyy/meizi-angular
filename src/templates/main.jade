@@ -1,3 +1,7 @@
+div.loading(ng-hide="loaded")
+    div.animate
+        span.circle.circle-small
+        span.loading-text 正在加载
 div.item-left#item-left
     div.item(ng-repeat="result in data" ng-if="$even")
         a(href="#/data/{[{ result.publishedAt }]}")

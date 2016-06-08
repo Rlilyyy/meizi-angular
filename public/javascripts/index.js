@@ -8088,6 +8088,8 @@ webpackJsonp([0,1],[
 	app.service("pageService", function () {
 	    this.page = 1;
 	    this.data = [];
+	    this.scrollEvent = {};
+	    this.scrollTop = 0;
 	});
 
 	app.config(function ($interpolateProvider) {
@@ -8121,31 +8123,47 @@ webpackJsonp([0,1],[
 	        });
 	    };
 
-	    window.addEventListener("scroll", function () {
+	    pageService.scrollEvent = function () {
 	        if (!isBottom()) return null;
 	        if ($scope.loaded) {
 	            $scope.getData();
 	        }
-	    }, false);
+	    };
+
+	    window.addEventListener("scroll", pageService.scrollEvent, false);
 
 	    if (!!pageService.data.length > 0) {
 	        $scope.refresh(pageService.data);
 	    } else {
 	        $scope.getData();
 	    }
-	}).controller("testController", function ($scope, $http, $routeParams, pageService) {
+
+	    container.addEventListener("click", function (event) {
+	        var e = window.event || event;
+	        var target = e.srcElement || e.target;
+
+	        if (target.nodeName === "A") {
+	            alert(target.scrollTop - 100);
+	            pageService.scrollTop = target.scrollTop - 100;
+	        }
+	    }, false);
+	    document.body.scrollTop = pageService.scrollTop;
+	}).controller("dataController", function ($scope, $http, $routeParams, pageService) {
 	    var date = $routeParams.date.split("-").join("/");
+	    $scope.loaded = false;
+	    window.removeEventListener("scroll", pageService.scrollEvent);
 	    $http.get(URL.DATA_URL + date).success(function (response) {
 	        var results = response.results;
 	        $scope.data = results;
+	        $scope.loaded = true;
 	    });
 	}).config(function ($routeProvider) {
 	    $routeProvider.when("/", {
 	        templateUrl: "main",
 	        controller: "welfaresController"
 	    }).when("/data/:date", {
-	        templateUrl: "test",
-	        controller: "testController"
+	        templateUrl: "data",
+	        controller: "dataController"
 	    });
 	});
 

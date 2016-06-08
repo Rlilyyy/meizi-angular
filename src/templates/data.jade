@@ -1,35 +1,53 @@
 div.data-container#data-container
     //- div.video
     //-     video(src="" controls="controls")   你的浏览器太落后了，无法观看视频
+    div.loading(ng-hide="loaded")
+        div.animate
+            span.circle.circle-small
+            span.loading-text 正在加载
+            //- span.circle.circle-middle
+            //- span.circle.circle-large
     div.fuli(style="background-image: url('{[{ data['福利'][0].url }]}')")
     div.all
         h2 休息视频
         ul.list
+            li(ng-if="!data['休息视频'][0]")
+                p 该类暂无推荐哟(*@ο@*)
             a(href="{[{ result.url }]}" ng-repeat="result in data['休息视频']")
                 li
                     p {[{ result.desc }]}
         h2 Android
         ul.list
+            li(ng-if="!data['Android'][0]")
+                p 该类暂无推荐哟(*@ο@*)
             a(href="{[{ result.url }]}" ng-repeat="result in data['Android']")
                 li
                     p {[{ result.desc }]}
         h2 IOS
         ul.list
+            li(ng-if="!data['iOS'][0]")
+                p 该类暂无推荐哟(*@ο@*)
             a(href="{[{ result.url }]}" ng-repeat="result in data['iOS']")
                 li
                     p {[{ result.desc }]}
         h2 前端
         ul.list
+            li(ng-if="!data['前端'][0]")
+                p 该类暂无推荐哟(*@ο@*)
             a(href="{[{ result.url }]}" ng-repeat="result in data['前端']")
                 li
                     p {[{ result.desc }]}
         h2 瞎推荐
         ul.list
+            li(ng-if="!data['瞎推荐'][0]")
+                p 该类暂无推荐哟(*@ο@*)
             a(href="{[{ result.url }]}" ng-repeat="result in data['瞎推荐']")
                 li
                     p {[{ result.desc }]}
         h2 拓展资源
         ul.list
+            li(ng-if="!data['拓展资源'][0]")
+                p 该类暂无推荐哟(*@ο@*)
             a(href="{[{ result.url }]}" ng-repeat="result in data['拓展资源']")
                 li
                     p {[{ result.desc }]}

@@ -22,6 +22,8 @@ let app = angular.module('ameizi', [ngRoute]);
 app.service("pageService", function() {
     this.page = 1;
     this.data = [];
+    this.scrollEvent = {};
+    this.scrollTop = 0;
 });
 
 app.config(($interpolateProvider) => {
@@ -57,12 +59,14 @@ app.controller("welfaresController", function($scope, $http, pageService) {
         });
     };
 
-    window.addEventListener("scroll", function() {
+    pageService.scrollEvent = function() {
         if(!isBottom()) return null;
         if($scope.loaded) {
             $scope.getData();
         }
-    }, false);
+    };
+
+    window.addEventListener("scroll", pageService.scrollEvent, false);
 
     if(!!pageService.data.length > 0) {
         $scope.refresh(pageService.data);
@@ -70,18 +74,31 @@ app.controller("welfaresController", function($scope, $http, pageService) {
         $scope.getData();
     }
 
-}).controller("testController", function($scope, $http,  $routeParams, pageService) {
+    container.addEventListener("click", function(event) {
+        let e = window.event || event;
+        let target = e.srcElement || e.target;
+
+        if(target.nodeName === "A") {
+            alert(target.scrollTop - 100)
+            pageService.scrollTop = target.scrollTop - 100;
+        }
+    }, false);
+    document.body.scrollTop = pageService.scrollTop;
+}).controller("dataController", function($scope, $http,  $routeParams, pageService) {
     let date = $routeParams.date.split("-").join("/");
+    $scope.loaded = false;
+    window.removeEventListener("scroll", pageService.scrollEvent);
     $http.get(URL.DATA_URL + date).success(response => {
         let results = response.results;
         $scope.data = results;
+        $scope.loaded = true;
     })
 }).config(function($routeProvider) {
     $routeProvider.when("/", {
         templateUrl: "main",
         controller: "welfaresController"
     }).when("/data/:date", {
-        templateUrl: "test",
-        controller: "testController"
+        templateUrl: "data",
+        controller: "dataController"
     })
 });

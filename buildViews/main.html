@@ -1,4 +1,7 @@
 
+<div ng-hide="loaded" class="loading">
+  <div class="animate"><span class="circle circle-small"></span><span class="loading-text">正在加载</span></div>
+</div>
 <div id="item-left" class="item-left">
   <div ng-repeat="result in data" ng-if="$even" class="item"><a href="#/data/{[{ result.publishedAt }]}">
       <div style="background-image: url('{[{ result.url }]}')" class="item-img"></div></a>
@@ -10,4 +13,4 @@
       <div style="background-image: url('{[{ result.url }]}')" class="item-img"></div></a>
     <div class="item-time">{[{ result.publishedAt }]}</div>
   </div>
-</div>
+</div><script type="text/javascript" src="/javascripts/vendors.js?adab86552b14c7bb3d83"></script>
