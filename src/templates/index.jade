@@ -3,15 +3,5 @@ block vars
     - var title = "Gank & Ameizi"
 block content
     include ../component/templates/header.jade
-    div.container.clearfix#container(ng-app="ameizi" ng-controller="mainController")
-        div.item-left#item-left
-            div.item
-                a(href="#")
-                    div.item-img
-                div.item-time 2016-06-07
-        
-        div.item-right#item-right
-            div.item
-                a(href="#")
-                    div.item-img
-                div.item-time 2016-06-07
+    div.container.clearfix#container(ng-app="ameizi")
+        div(ng-view="")

@@ -2,6 +2,7 @@ require("../component/stylesheets/common.less");
 require("../component/stylesheets/header.less");
 require("font-awesome/css/font-awesome.min.css");
 require("../stylesheet/index.less");
+require("../stylesheet/data.less");
 
 let $ajax = require("../component/javascripts/ajax.js");
 
