@@ -53,10 +53,10 @@ module.exports = {
             {
                 test: /\.js?$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: 'babel',
-                query: {
-                    presets: ['es2015']
-                }
+                loader: 'ng-annotate!babel?presets=es2015',
+                // query: {
+                //     presets: ['es2015']
+                // }
             },
             {
                 //文件加载器，处理文件静态资源

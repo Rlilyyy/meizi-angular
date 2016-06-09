@@ -4,7 +4,7 @@ require("font-awesome/css/font-awesome.min.css");
 require("../stylesheet/index.less");
 require("../stylesheet/data.less");
 
-let $ajax = require("../component/javascripts/ajax.js");
+// let $ajax = require("../component/javascripts/ajax.js");
 
 let URL = {
     // HISTORY_URL: "http://localhost:5000/getDate",
@@ -12,12 +12,12 @@ let URL = {
     // DATA_URL: "http://localhost:5000/getData"
     DATA_URL: "./getData/",
     FULI_URL: "./getFuli/10/"
-}
+};
 
 let angular = require("angular");
 let ngRoute = require("angular-route");
 
-let app = angular.module('ameizi', [ngRoute]);
+let app = angular.module("ameizi", [ngRoute]);
 
 app.service("pageService", function() {
     this.page = 1;
@@ -27,8 +27,8 @@ app.service("pageService", function() {
 });
 
 app.config(($interpolateProvider) => {
-    $interpolateProvider.startSymbol('{[{');
-    $interpolateProvider.endSymbol('}]}');
+    $interpolateProvider.startSymbol("{[{");
+    $interpolateProvider.endSymbol("}]}");
 });
 
 
@@ -39,7 +39,7 @@ app.controller("welfaresController", function($scope, $http, pageService) {
     let isBottom = function() {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         return (document.body.scrollHeight - clientHeight - 100) <= scrollTop;
-    }
+    };
     $scope.loaded = false;
     $scope.data = [];
 
@@ -49,7 +49,7 @@ app.controller("welfaresController", function($scope, $http, pageService) {
             return obj;
         }));
         $scope.loaded = true;
-    }
+    };
 
     $scope.getData = function() {
         $scope.loaded = false;
@@ -92,7 +92,7 @@ app.controller("welfaresController", function($scope, $http, pageService) {
         let results = response.results;
         $scope.data = results;
         $scope.loaded = true;
-    })
+    });
 }).config(function($routeProvider) {
     $routeProvider.when("/", {
         templateUrl: "main",
@@ -100,5 +100,5 @@ app.controller("welfaresController", function($scope, $http, pageService) {
     }).when("/data/:date", {
         templateUrl: "data",
         controller: "dataController"
-    })
+    });
 });
