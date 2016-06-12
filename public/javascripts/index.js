@@ -8143,7 +8143,6 @@ webpackJsonp([0,1],[
 	        var target = e.srcElement || e.target;
 
 	        if (target.nodeName === "A") {
-	            alert(target.scrollTop - 100);
 	            pageService.scrollTop = target.scrollTop - 100;
 	        }
 	    }, false);
@@ -8151,7 +8150,7 @@ webpackJsonp([0,1],[
 	}]).controller("dataController", ["$scope", "$http", "$routeParams", "pageService", function ($scope, $http, $routeParams, pageService) {
 
 	    var date = $routeParams.date.split("-").join("/");
-	    var urlReg = /\"(.*?)\"/;
+	    var urlReg = /http:(.*?)(.\jpg|.\png)/;
 	    var fuliDetailElem = document.getElementById("fuli-detail");
 	    var fuliElem = document.getElementById("fuli");
 	    var insertSpan = document.getElementById("insert-span");
@@ -8162,11 +8161,11 @@ webpackJsonp([0,1],[
 	    $scope.isFirstOpen = false;
 	    window.removeEventListener("scroll", pageService.scrollEvent);
 
-	    fuliElem.addEventListener("click", function (event) {
+	    fuliElem.addEventListener("touchend", function (event) {
 	        var e = window.event || event;
 	        var target = e.target;
 	        if (!$scope.isFirstOpen) {
-	            var fuliUrl = urlReg.exec(target.style.backgroundImage)[1];
+	            var fuliUrl = urlReg.exec(target.style.backgroundImage)[0];
 	            var imgElem = document.createElement("img");
 
 	            imgElem.src = fuliUrl;
@@ -8182,7 +8181,7 @@ webpackJsonp([0,1],[
 	        }
 	    }, false);
 
-	    fuliDetailElem.addEventListener("click", function () {
+	    fuliDetailElem.addEventListener("touchend", function () {
 	        $scope.$apply(function () {
 	            $scope.detailFlag = false;
 	        });

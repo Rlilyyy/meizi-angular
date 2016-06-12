@@ -79,7 +79,6 @@ app.controller("welfaresController", function($scope, $http, pageService) {
         let target = e.srcElement || e.target;
 
         if(target.nodeName === "A") {
-            alert(target.scrollTop - 100)
             pageService.scrollTop = target.scrollTop - 100;
         }
     }, false);
@@ -87,7 +86,7 @@ app.controller("welfaresController", function($scope, $http, pageService) {
 }).controller("dataController", function($scope, $http, $routeParams, pageService) {
 
     let date = $routeParams.date.split("-").join("/");
-    let urlReg = /\"(.*?)\"/;
+    let urlReg = /http:(.*?)(.\jpg|.\png)/;
     let fuliDetailElem = document.getElementById("fuli-detail");
     let fuliElem = document.getElementById("fuli");
     let insertSpan = document.getElementById("insert-span");
@@ -99,11 +98,11 @@ app.controller("welfaresController", function($scope, $http, pageService) {
     $scope.isFirstOpen = false;
     window.removeEventListener("scroll", pageService.scrollEvent);
 
-    fuliElem.addEventListener("click", function(event) {
+    fuliElem.addEventListener("touchend", function(event) {
         let e = window.event || event;
         let target = e.target;
         if(!$scope.isFirstOpen) {
-            let fuliUrl = urlReg.exec(target.style.backgroundImage)[1];
+            let fuliUrl = urlReg.exec(target.style.backgroundImage)[0];
             let imgElem = document.createElement("img");
 
             imgElem.src = fuliUrl;
@@ -120,7 +119,7 @@ app.controller("welfaresController", function($scope, $http, pageService) {
 
     }, false);
 
-    fuliDetailElem.addEventListener("click", function() {
+    fuliDetailElem.addEventListener("touchend", function() {
         $scope.$apply(function() {
             $scope.detailFlag = false;
         });
