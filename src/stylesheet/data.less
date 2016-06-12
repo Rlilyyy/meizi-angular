@@ -19,12 +19,35 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+
+    .fuli-detail {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: table;
+        text-align: center;
+        font-size: 0;
+        background-color: rgba(42, 42, 42, 0.9);
+
+        .insert-span {
+            display: table-cell;
+            vertical-align: middle;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
 }
 
 .loading {
     position: fixed;
     width: 100%;
     height: 100%;
+    left: 0;
+    top: 0;
     z-index: 99999;
 
     .animate {

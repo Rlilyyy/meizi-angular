@@ -84,10 +84,48 @@ app.controller("welfaresController", function($scope, $http, pageService) {
         }
     }, false);
     document.body.scrollTop = pageService.scrollTop;
-}).controller("dataController", function($scope, $http,  $routeParams, pageService) {
+}).controller("dataController", function($scope, $http, $routeParams, pageService) {
+
     let date = $routeParams.date.split("-").join("/");
+    let urlReg = /\"(.*?)\"/;
+    let fuliDetailElem = document.getElementById("fuli-detail");
+    let fuliElem = document.getElementById("fuli");
+    let insertSpan = document.getElementById("insert-span");
+    
+
     $scope.loaded = false;
+    $scope.detailFlag = false;
+    $scope.isOpen = false;
+    $scope.isFirstOpen = false;
     window.removeEventListener("scroll", pageService.scrollEvent);
+
+    fuliElem.addEventListener("click", function(event) {
+        let e = window.event || event;
+        let target = e.target;
+        if(!$scope.isFirstOpen) {
+            let fuliUrl = urlReg.exec(target.style.backgroundImage)[1];
+            let imgElem = document.createElement("img");
+
+            imgElem.src = fuliUrl;
+            insertSpan.appendChild(imgElem);
+            $scope.$apply(function() {
+                $scope.detailFlag = true;
+            });
+            $scope.isFirstOpen = true;
+        }else {
+            $scope.$apply(function() {
+                $scope.detailFlag = true;
+            });
+        }
+
+    }, false);
+
+    fuliDetailElem.addEventListener("click", function() {
+        $scope.$apply(function() {
+            $scope.detailFlag = false;
+        });
+    }, false);
+
     $http.get(URL.DATA_URL + date).success(response => {
         let results = response.results;
         $scope.data = results;

@@ -7,7 +7,10 @@ div.data-container#data-container
             span.loading-text 正在加载
             //- span.circle.circle-middle
             //- span.circle.circle-large
-    div.fuli(style="background-image: url('{[{ data['福利'][0].url }]}')")
+    div.fuli-detail(ng-show="detailFlag" id="fuli-detail")
+        span(class="insert-span" id="insert-span")
+
+    div.fuli(style="background-image: url('{[{ data['福利'][0].url }]}')" id="fuli")
     div.all
         h2 休息视频
         ul.list

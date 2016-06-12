@@ -4,7 +4,8 @@
     <div class="animate"><span class="circle circle-small"></span><span class="loading-text">正在加载</span>
     </div>
   </div>
-  <div style="background-image: url('{[{ data['福利'][0].url }]}')" class="fuli"></div>
+  <div ng-show="detailFlag" id="fuli-detail" class="fuli-detail"><span id="insert-span" class="insert-span"></span></div>
+  <div style="background-image: url('{[{ data['福利'][0].url }]}')" id="fuli" class="fuli"></div>
   <div class="all">
     <h2>休息视频</h2>
     <ul class="list">
@@ -61,4 +62,4 @@
         </li></a>
     </ul>
   </div>
-</div><script type="text/javascript" src="/javascripts/vendors.js?d78affa07159f995b027"></script>
+</div><script type="text/javascript" src="/javascripts/vendors.js?ac9a1c1fdae79a45380a"></script>
