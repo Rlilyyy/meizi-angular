@@ -8090,6 +8090,10 @@ webpackJsonp([0,1],[
 	    this.data = [];
 	    this.scrollEvent = {};
 	    this.scrollTop = 0;
+
+	    this.scrollToTop = function () {
+	        document.body.scrollTop = "0px";
+	    };
 	});
 
 	app.config(["$interpolateProvider", function ($interpolateProvider) {
@@ -8106,6 +8110,8 @@ webpackJsonp([0,1],[
 	    };
 	    $scope.loaded = false;
 	    $scope.data = [];
+
+	    pageService.scrollToTop();
 
 	    $scope.refresh = function (results) {
 	        Array.prototype.push.apply($scope.data, results.map(function (obj) {
@@ -8151,6 +8157,7 @@ webpackJsonp([0,1],[
 
 	    var date = $routeParams.date.split("-").join("/");
 	    var urlReg = /http:(.*?)(.\jpg|.\png)/;
+
 	    var fuliDetailElem = document.getElementById("fuli-detail");
 	    var fuliElem = document.getElementById("fuli");
 	    var insertSpan = document.getElementById("insert-span");
@@ -8161,7 +8168,9 @@ webpackJsonp([0,1],[
 	    $scope.isFirstOpen = false;
 	    window.removeEventListener("scroll", pageService.scrollEvent);
 
-	    fuliElem.addEventListener("touchend", function (event) {
+	    pageService.scrollToTop();
+
+	    fuliElem.addEventListener("click", function (event) {
 	        var e = window.event || event;
 	        var target = e.target;
 	        if (!$scope.isFirstOpen) {
@@ -8170,6 +8179,7 @@ webpackJsonp([0,1],[
 
 	            imgElem.src = fuliUrl;
 	            insertSpan.appendChild(imgElem);
+
 	            $scope.$apply(function () {
 	                $scope.detailFlag = true;
 	            });
@@ -8181,10 +8191,12 @@ webpackJsonp([0,1],[
 	        }
 	    }, false);
 
-	    fuliDetailElem.addEventListener("touchend", function () {
+	    fuliDetailElem.addEventListener("click", function (event) {
+	        var e = window.event || event;
 	        $scope.$apply(function () {
 	            $scope.detailFlag = false;
 	        });
+	        // e.preventDefault();
 	    }, false);
 
 	    $http.get(URL.DATA_URL + date).success(function (response) {

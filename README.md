@@ -1,2 +1,22 @@
 # meizi-angular
-Ameizi with angular and webpack
+
+感谢 @代码家 的 gank.io 提供的 API
+
+update 2016-06-01
+* 预览版本完成
+* 首页显示不同日期的福利图片
+* 点击某日期的福利图片来查看当天推荐信息
+
+update 2016-06-15
+* 在当天推荐信息中点击福利图片将可以放大福利图片
+
+update 2016-06-16
+* 修复图片缩小时的点击穿透现象
+* 修复不同单页 scrollTop 相互影响
+
+next update
+* 首页图片使用 lazy-load 加载（滚屏加载）
+* 图片放大将有动画过程
+* navbar 下拉列表功能添加（功能待定）
+* 分类 bar
+* 评论功能

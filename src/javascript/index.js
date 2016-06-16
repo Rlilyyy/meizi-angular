@@ -24,6 +24,10 @@ app.service("pageService", function() {
     this.data = [];
     this.scrollEvent = {};
     this.scrollTop = 0;
+
+    this.scrollToTop = function() {
+        document.body.scrollTop = "0px";
+    }
 });
 
 app.config(($interpolateProvider) => {
@@ -42,6 +46,8 @@ app.controller("welfaresController", function($scope, $http, pageService) {
     };
     $scope.loaded = false;
     $scope.data = [];
+
+    pageService.scrollToTop();
 
     $scope.refresh = function(results) {
         Array.prototype.push.apply($scope.data, results.map(obj => {
@@ -87,10 +93,11 @@ app.controller("welfaresController", function($scope, $http, pageService) {
 
     let date = $routeParams.date.split("-").join("/");
     let urlReg = /http:(.*?)(.\jpg|.\png)/;
+
     let fuliDetailElem = document.getElementById("fuli-detail");
     let fuliElem = document.getElementById("fuli");
     let insertSpan = document.getElementById("insert-span");
-    
+
 
     $scope.loaded = false;
     $scope.detailFlag = false;
@@ -98,7 +105,9 @@ app.controller("welfaresController", function($scope, $http, pageService) {
     $scope.isFirstOpen = false;
     window.removeEventListener("scroll", pageService.scrollEvent);
 
-    fuliElem.addEventListener("touchend", function(event) {
+    pageService.scrollToTop();
+
+    fuliElem.addEventListener("click", function(event) {
         let e = window.event || event;
         let target = e.target;
         if(!$scope.isFirstOpen) {
@@ -107,6 +116,7 @@ app.controller("welfaresController", function($scope, $http, pageService) {
 
             imgElem.src = fuliUrl;
             insertSpan.appendChild(imgElem);
+
             $scope.$apply(function() {
                 $scope.detailFlag = true;
             });
@@ -116,13 +126,14 @@ app.controller("welfaresController", function($scope, $http, pageService) {
                 $scope.detailFlag = true;
             });
         }
-
     }, false);
 
-    fuliDetailElem.addEventListener("touchend", function() {
+    fuliDetailElem.addEventListener("click", function(event) {
+        let e = window.event || event;
         $scope.$apply(function() {
             $scope.detailFlag = false;
         });
+        // e.preventDefault();
     }, false);
 
     $http.get(URL.DATA_URL + date).success(response => {
