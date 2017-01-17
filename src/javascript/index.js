@@ -59,9 +59,10 @@ app.controller("welfaresController", function($scope, $http, pageService) {
 
     $scope.getData = function() {
         $scope.loaded = false;
-        $http.get(URL.FULI_URL + (pageService.page++)).success(response => {
-            Array.prototype.push.apply(pageService.data, response.results);
-            $scope.refresh(response.results);
+        $http.get(URL.FULI_URL + (pageService.page++)).then(response => {
+            console.log(response);
+            Array.prototype.push.apply(pageService.data, response.data.results);
+            $scope.refresh(response.data.results);
         });
     };
 
@@ -136,8 +137,9 @@ app.controller("welfaresController", function($scope, $http, pageService) {
         // e.preventDefault();
     }, false);
 
-    $http.get(URL.DATA_URL + date).success(response => {
-        let results = response.results;
+    $http.get(URL.DATA_URL + date).then(response => {
+        console.log(response);
+        let results = response.data.results;
         $scope.data = results;
         $scope.loaded = true;
     });

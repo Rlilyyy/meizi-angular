@@ -1,3 +1,4 @@
 /node_modules/
+/buildViews/
 *.hot-update.json
 *.hot-update.js
